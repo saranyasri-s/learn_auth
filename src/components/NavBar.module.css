@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  background-color: blue;
+  color: white;
+}
+.headerRight {
+  display: flex;
+  color: white;
+  font-weight: bold;
+  align-items: center;
+}
+.headerRight a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.headerRight a:hover,
+.headerRight a:active,
+.headerRight a.active {
+  border-bottom: 2px solid white;
+}
+.headerRight button {
+  padding: 0.3rem 0.7rem;
+
+  border-radius: 5px;
+  background-color: rgb(211, 28, 211);
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+}
+.headerRight button:hover {
+  background-color: rgb(212, 129, 212);
+  border: 2px solid rgb(230, 219, 219);
+  color: rgb(19, 17, 17);
+}

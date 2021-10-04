@@ -1,0 +1,52 @@
+.formPage {
+  width: 50%;
+  margin: 1rem auto;
+  border: 2px solid rgb(66, 4, 66);
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: violet;
+  box-sizing: border-box;
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  width: 70%;
+  margin: auto;
+}
+.form label,
+.form input,
+.form button {
+  padding: 0.3rem 0.5rem;
+  margin: 0.5rem 1rem;
+  font-weight: bold;
+}
+
+.form label,
+.form input {
+  border: 1.5px solid violet;
+  border-radius: 4px;
+}
+.form button {
+  width: 50%;
+  margin: auto;
+  margin-top: 0.5rem;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: rgb(228, 31, 228);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.form button:hover {
+  background-color: rgb(119, 44, 119);
+}
+@media (max-width: 500px) {
+  .formPage {
+    width: 90%;
+    margin: 1rem;
+  }
+  .form {
+    width: 90%;
+  }
+}
