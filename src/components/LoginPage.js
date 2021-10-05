@@ -9,34 +9,38 @@ function LoginPage() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    let url;
     if (isLogin) {
-      console.log("jhg");
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC9c9tIlGEvkwzYEkhWjVoudJ_A8DHGnqI";
     } else {
-      setIsLoading(true);
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC9c9tIlGEvkwzYEkhWjVoudJ_A8DHGnqI",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: email,
-            password: pwd,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok == false) {
-        console.log(response);
-        alert("something went wrong");
-      }
-      setIsLoading(false);
-      setIsLogin(true);
-      setPwd("");
-      setEmail("");
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC9c9tIlGEvkwzYEkhWjVoudJ_A8DHGnqI";
     }
+    setIsLoading(true);
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        password: pwd,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok == false) {
+      console.log(response);
+      alert("Authentication failed");
+    } else {
+      const data = await response.json();
+      console.log(data);
+    }
+    setIsLoading(false);
+    setIsLogin(true);
+    setPwd("");
+    setEmail("");
   };
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
