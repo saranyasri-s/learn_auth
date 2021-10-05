@@ -1,11 +1,42 @@
 import React, { useState, useEffect } from "react";
 import classes from "./LoginPage.module.css";
+import Spinner from "./Spinner";
 function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
     e.preventDefault();
+    if (isLogin) {
+      console.log("jhg");
+    } else {
+      setIsLoading(true);
+      const response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC9c9tIlGEvkwzYEkhWjVoudJ_A8DHGnqI",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            password: pwd,
+            returnSecureToken: true,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok == false) {
+        console.log(response);
+        alert("something went wrong");
+      }
+      setIsLoading(false);
+      setIsLogin(true);
+      setPwd("");
+      setEmail("");
+    }
   };
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -22,18 +53,29 @@ function LoginPage() {
     <div className={classes.formPage}>
       <form className={classes.form} onSubmit={submitHandler}>
         <label>Email</label>
-        <input onChange={emailChangeHandler} value={email} type="email"></input>
+        <input
+          required
+          onChange={emailChangeHandler}
+          value={email}
+          type="email"
+        ></input>
         <label>Password</label>
-        <input onChange={passwordChangeHandler} value={pwd} type="pwd"></input>
-        <button type="submit">
-          {isLogin ? "Login" : "Signin"}
-        </button>
+        <input
+          required
+          onChange={passwordChangeHandler}
+          value={pwd}
+          type="pwd"
+        ></input>
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <button type="submit">{isLogin ? "Login" : "SignUp"}</button>
+        )}
       </form>
       <button
         onClick={changeLoginStateHandler}
         className={classes.switchButton}
       >
-        click here to {isLogin ? "Signin" : "Login"}
+        click here to {isLogin ? "SignUp" : "Login"}
       </button>
     </div>
   );
