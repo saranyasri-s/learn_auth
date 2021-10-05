@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./LoginPage.module.css";
 import Spinner from "./Spinner";
+import AuthContext from "../store/AuthContext";
 function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-
+  const authCtx = useContext(AuthContext);
   const submitHandler = async (e) => {
     e.preventDefault();
     let url;
     if (isLogin) {
+      console.log("isLogintrue");
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC9c9tIlGEvkwzYEkhWjVoudJ_A8DHGnqI";
     } else {
@@ -30,11 +32,14 @@ function LoginPage() {
       },
     });
 
-    if (response.ok == false) {
+    if (!response.ok) {
       console.log(response);
       alert("Authentication failed");
     } else {
       const data = await response.json();
+      if (isLogin) {
+        authCtx.logIn(data.idToken);
+      }
       console.log(data);
     }
     setIsLoading(false);
